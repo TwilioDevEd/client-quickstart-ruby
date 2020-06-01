@@ -7,3 +7,4 @@
 /doc/api
 /Gemfile.lock
 /vendor/bundle
+.tool-versions
