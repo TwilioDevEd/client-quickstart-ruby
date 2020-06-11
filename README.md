@@ -42,13 +42,13 @@ Before we begin, we need to collect all the config values we need to run the app
    cd client-quickstart-ruby
    ```
 
-1. Install depenedencies.
+2. Install depenedencies.
 
     ```bash
     make install
     ```
 
-1. Set your environment variables.
+3. Set your environment variables.
 
     ```bash
     cp .env.example .env
@@ -56,35 +56,45 @@ Before we begin, we need to collect all the config values we need to run the app
 
     See [Twilio Account Settings](#twilio-account-settings) to locate the necessary environment variables.
 
-1. Start the server.
+4. Start the server.
 
     ```bash
     make serve
     ```
 
-1. Navigate to [http://localhost:4567](http://localhost:4567). 
+5. Navigate to [http://localhost:4567](http://localhost:4567). 
 
-1. Expose your application to the wider internet using ngrok. You can click [here](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html) for more details. This step **is important** because the application won't work as expected if you run it through localhost.
+6. Expose your application to the wider internet using [ngrok](https://ngrok.com/). You can click [here](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html) for more details. This step **is important** because the application won't work as expected if you run it through localhost.
 
     ```bash
     ngrok http 4567
     ```
 
-1. Once ngrok is running, it will assign a unique URL to your tunnel. It might be something like `https://asdf456.ngrok.io`. Take note of this.
+7. Once ngrok is running, it will assign a unique URL to your tunnel. It might be something like `https://asdf456.ngrok.io`. Take note of this.
 
-1. [Configure your TwiML app](https://www.twilio.com//console/phone-numbers/dev-tools/twiml-apps)'s
+8. [Configure your TwiML app](https://www.twilio.com//console/phone-numbers/dev-tools/twiml-apps)'s
 Voice "REQUEST URL" to be your ngrok URL plus `/voice`. For example:
 
     ![screenshot of twiml app](https://s3.amazonaws.com/com.twilio.prod.twilio-docs/images/TwilioClientRequestUrl.original.png)
 
-You should now be ready to rock! Make some phone calls.
-Open it on another device and call yourself. Note that Twilio Client requires
-WebRTC enabled browsers, so Edge and Internet Explorer will not work for testing.
-We'd recommend Google Chrome or Mozilla Firefox instead.
+   You should now be ready to rock! Make some phone calls.
+   Open it on another device and call yourself. Note that Twilio Client requires
+   WebRTC enabled browsers, so Edge and Internet Explorer will not work for testing.
+   We'd recommend Google Chrome or Mozilla Firefox instead.
 
-![screenshot of phone app](https://s3.amazonaws.com/com.twilio.prod.twilio-docs/images/TwilioClientQuickstart.original.png)
+   ![screenshot of phone app](https://s3.amazonaws.com/com.twilio.prod.twilio-docs/images/TwilioClientQuickstart.original.png)
 
 That's it!
+
+### Docker
+
+If you have [Docker](https://www.docker.com/) already installed on your machine, you can use our `docker-compose.yml` to setup your project.
+
+1. Make sure you have the project cloned.
+2. Setup the `.env` file as outlined in the [Local Development](#local-development) steps.
+3. Run `docker-compose up`.
+4. Follow the steps in [Local Development](#local-development) on how to expose your port to Twilio using a tool like [ngrok](https://ngrok.com/) and configure the remaining parts of your application.
+
 
 ### Tests
 
