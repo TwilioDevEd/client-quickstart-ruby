@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'twilio-ruby'
 require 'sinatra'
 require 'sinatra/json'
@@ -14,36 +16,51 @@ end
 
 # Generate a token for use in our Video application
 get '/token' do
+  # Required for any Twilio Access Token
+  account_sid = ENV['TWILIO_ACCOUNT_SID']
+  api_key = ENV['API_KEY']
+  api_secret = ENV['API_SECRET']
+
+  # Required for Voice
+  outgoing_application_sid = ENV['TWILIO_TWIML_APP_SID']
+
   # Create a random username for the client
   identity = Faker::Internet.user_name.gsub(/[^0-9a-z_]/i, '')
 
-  capability = Twilio::JWT::ClientCapability.new ENV['TWILIO_ACCOUNT_SID'],
-    ENV['TWILIO_AUTH_TOKEN']
-  # Create an application sid at
-  # twilio.com/console/phone-numbers/dev-tools/twiml-apps and use it here
-  outgoing_scope = Twilio::JWT::ClientCapability::OutgoingClientScope.new(ENV['TWILIO_TWIML_APP_SID'])
-  incoming_scope = Twilio::JWT::ClientCapability::IncomingClientScope.new('test-client-name')
-  capability.add_scope(outgoing_scope)
-  capability.add_scope(incoming_scope)
+  # Create Voice grant for our token
+  grant = Twilio::JWT::AccessToken::VoiceGrant.new
+  grant.outgoing_application_sid = outgoing_application_sid
+
+  # Optional: add to allow incoming calls
+  grant.incoming_allow = true
+
+  # Create an Access Token
+  token = Twilio::JWT::AccessToken.new(
+    account_sid,
+    api_key,
+    api_secret,
+    [grant],
+    identity: identity
+  )
 
   # Generate the token and send to client
-  json :identity => identity, :token => capability.to_jwt
+  json :identity => identity, :token => token.to_jwt
 end
 
 post '/voice' do
   twiml = Twilio::TwiML::VoiceResponse.new do |r|
-    if params['To'] and params['To'] != ''
+    if params['To'] && params['To'] != ''
       r.dial(caller_id: ENV['TWILIO_CALLER_ID']) do |d|
         # wrap the phone number or client name in the appropriate TwiML verb
         # by checking if the number given has only digits and format symbols
         if params['To'] =~ /^[\d\+\-\(\) ]+$/
           d.number(params['To'])
         else
-          d.client(params['To'])
+          d.client identity: params['To']
         end
       end
     else
-      r.say("Thanks for calling!")
+      r.say(message: "Thanks for calling!")
     end
   end
 
