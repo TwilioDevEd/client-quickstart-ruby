@@ -9,6 +9,11 @@ require 'faker'
 # Load environment configuration
 Dotenv.load
 
+# Set the environment after dotenv loads
+# Default to production
+enviroment = (ENV['APP_ENV'] || ENV['RACK_ENV'] || :production).to_sym
+set :environment, enviroment
+
 # Render home page
 get '/' do
   File.read(File.join('public', 'index.html'))
