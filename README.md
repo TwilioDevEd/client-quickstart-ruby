@@ -1,19 +1,21 @@
+:warning:
+
+This is a deprecated project.
+
+Please go to the [Twilio Voice JavaScript SDK quickstart for Ruby](https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-ruby)
+
+:warning:
+
+
+
+
 # Twilio Client Quickstart for Ruby
 
-![](https://github.com/TwilioDevEd/client-quickstart-ruby/workflows/Ruby/badge.svg)
-
-> This template is part of Twilio CodeExchange. If you encounter any issues with this code, please open an issue at [github.com/twilio-labs/code-exchange/issues](https://github.com/twilio-labs/code-exchange/issues).
 
 ## About
 
 This application should give you a ready-made starting point for writing your own voice apps with Twilio Client. This application use [Sinatra](http://sinatrarb.com/documentation.html).
 
-
-Implementations in other languages:
-
-| .NET | Java | Python | PHP | Node |
-| :--- | :--- | :----- | :-- | :--- |
-| [Done](https://github.com/TwilioDevEd/client-quickstart-csharp) | [Done](https://github.com/TwilioDevEd/client-quickstart-java)  | [Done](https://github.com/TwilioDevEd/client-quickstart-python)  | [Done](https://github.com/TwilioDevEd/client-quickstart-php) | [Done](https://github.com/TwilioDevEd/client-quickstart-node)  |
 
 ## Set up
 
